@@ -1,8 +1,5 @@
 
 
-
-
-
 admin:
   access_log_path: /tmp/admin_access.log
   address:
