@@ -1,0 +1,13 @@
+$gutter: 1rem;
+
+@import 'primeflex/primeflex.css';
+
+@import 'prismjs/themes/prism-coy.css';
+@import '@fullcalendar/core/main.css';
+@import '@fullcalendar/daygrid/main.css';
+@import '@fullcalendar/timegrid/main.css';
+@import './AppDemo.scss';
+@import './_hero.scss';
+@import './_main.scss';
+
+@import './styles/layout/landing/_dark.scss';

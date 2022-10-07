@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: serversmgs
+spec:
+  ports:
+  - port: 13002
+    targetPort: 13002
+    protocol: TCP
+---
+# Because this service has no selector, the corresponding Endpoints
+# object will not be created. You can manually map the service to
+# your own specific endpoints:
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: serversmgs
+subsets:
+  - addresses:
+      - ip: "172.27.28.221"
+    ports:
+      - port: 13002

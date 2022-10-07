@@ -1,0 +1,30 @@
+type Query {
+    jobsmsList : [JobSms],
+    findJobSmsByIds(idJob : String) : JobSms
+}
+
+type JobSms{
+    idJob: String,
+    name: String,
+    description: String,
+
+    jobStatus: JobStatus
+    detailJobList: [DetailJob]
+}
+type DetailJob{
+    idDetail: String,
+    jobSms: JobSms,
+    phoneNumber: String,
+    froms: String,
+    message: String,
+    detailStatus: DetailStatus
+}
+
+enum DetailStatus {
+    CREATED,RUNNING,VALIDGATEWAY,DELIVERED,NOTDELIVERED,INQUEUE
+}
+enum JobStatus{
+    CREATED,STARTED,TERMINATED,FAILED,EXPIREDTIME
+}
+
+

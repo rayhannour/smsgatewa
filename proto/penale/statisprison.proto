@@ -1,0 +1,29 @@
+syntax="proto3";
+
+option java_package="com.cgpr.penaleservice.grpc.stub";
+
+message Statispr{
+  int64 tdatjour=1;
+  double  count=2;
+}
+
+message GetStatJourRequest{
+  int64 tdatjour=1;
+
+}
+
+message GetStatGlobalRequest{
+}
+
+message GetStatJourResponse{
+   Statispr statispr=1;
+}
+
+message GetStatListResponse{
+  repeated  Statispr statispr=1;
+}
+
+service StatisprisonService{
+  rpc getStatispr(GetStatGlobalRequest) returns (GetStatListResponse);
+  rpc getStatisprJour(GetStatJourRequest) returns (GetStatJourResponse);
+}

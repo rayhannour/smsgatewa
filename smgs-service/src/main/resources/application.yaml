@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: smgs-service
+  cloud:
+    config:
+      uri: http://gateway-services:8888
+      profile: local, prod
+    discovery:
+      enabled: true
+  data:
+    rest:
+      return-body-on-create: true
+      return-body-on-update: true
+  rabbitmq:
+    host: localhost
+    username: user
+    password: user
+  graphql:
+    path: /graphql
+    tools:
+      introspection-enabled: false
+    graphiql:
+      enabled: true
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@//192.168.100.238:1521/testpenale
+    username: oscarito
+    password: oscarito
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.100.218:8080/auth/realms/penale-realm
+          jwk-set-uri: http://192.168.100.218:8080/auth/realms/penale-realm/.well-known/openid-configuration
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-services:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  port: 8082
+  servlet:
+    context-path: /api/
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+
