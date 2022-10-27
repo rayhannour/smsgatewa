@@ -1,0 +1,37 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: smgs-services
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: smgs-services
+  template:
+    metadata:
+      labels:
+        app: smgs-services
+    spec:
+      containers:
+      - name: smgs-services
+        image: 090380/sms-sapp-v1:1.01
+        ports:
+        - containerPort: 8082
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smgs-services
+  labels:
+    app: smgs-services
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8082
+    targetPort: 8082
+    protocol: TCP
+    nodePort: 31395
+  selector:
+    app: smgs-services
