@@ -3,7 +3,7 @@ import React from 'react';
 
 
 export const instance= axios.create({
-  baseURL: `http://minikubehost:31395/`
+  baseURL: `http://minikubehost:31002/`
 });
 
 export const tocken=()=>{
