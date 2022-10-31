@@ -68,7 +68,7 @@ public class SendSms {
         String urlLdr =
                 URLEncoder.encode("http", "UTF-8") +
                         URLEncoder.encode("://", "UTF-8").toLowerCase() +
-                        URLEncoder.encode("gateway-services:8888", "UTF-8") +
+                        URLEncoder.encode("192.168.100.218:8888", "UTF-8") +
                         URLEncoder.encode("/", "UTF-8").toLowerCase() +
                         URLEncoder.encode("SMGS-SERVICE", "UTF-8") +
                         URLEncoder.encode("/", "UTF-8").toLowerCase() +
