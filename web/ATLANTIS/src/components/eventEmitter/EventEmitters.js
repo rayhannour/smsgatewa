@@ -20,7 +20,7 @@ export const EventEmitters = () => {
 
     useEffect(async () => {
         /*if (!listening) {
-            eventSource = new EventSource("http://minikubehost:31002/SMGS-SERVICE/api/event/subscribe", {
+            eventSource = new EventSource("http://minikubehost:8888/SMGS-SERVICE/api/event/subscribe", {
 
             });
             console.log("TOCKEN :" + keycloak.token);
