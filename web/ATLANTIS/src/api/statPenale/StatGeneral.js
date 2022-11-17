@@ -32,6 +32,45 @@ export const fetchDataPrison=(keycloak)=>{
     })
 }
 
+export const fetchDataPrisonEntranSortant=(keycloak,age1,age2)=>{    
+    return instance({
+        method:'GET',
+        url:`/PENALE-SERVICE/api/stat/entrantsortant/between/${age1}/${age2}`,
+        headers:{
+            'Authorization':'Bearer '+keycloak.token
+        }
+    })
+}
+
+export const fetchDataPrisonEntrantYears=(keycloak,years)=>{    
+    return instance({
+        method:'GET',
+        url:`/PENALE-SERVICE/api/stat/entrantsortant/entrant/${years}`,
+        headers:{
+            'Authorization':'Bearer '+keycloak.token
+        }
+    })
+}
+export const fetchDataPrisonSortantYears=(keycloak,years)=>{    
+    return instance({
+        method:'GET',
+        url:`/PENALE-SERVICE/api/stat/entrantsortant/sortant/${years}`,
+        headers:{
+            'Authorization':'Bearer '+keycloak.token
+        }
+    })
+}
+
+export const fetchDataTerrorismes=(keycloak)=>{    
+    return instance({
+        method:'GET',
+        url:`/PENALE-SERVICE/api/stat/terrorisme/terrorismes`,
+        headers:{
+            'Authorization':'Bearer '+keycloak.token
+        }
+    })
+}
+
 export const fetchDataNatureAffaire=(keycloak)=>{    
     return instance({
         method:'GET',

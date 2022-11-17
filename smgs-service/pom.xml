@@ -24,6 +24,16 @@
 			<artifactId>graphql-spring-boot-starter</artifactId>
 			<version>${graphql.verion}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-java-extended-scalars</artifactId>
+			<version>19.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tailrocks.graphql</groupId>
+			<artifactId>graphql-datetime-spring-boot-starter</artifactId>
+			<version>5.0.1</version>
+		</dependency>
 	</dependencies>
 
 

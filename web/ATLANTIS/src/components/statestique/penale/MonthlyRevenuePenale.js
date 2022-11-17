@@ -9,22 +9,28 @@ import { LineChartAge } from './lineChartAge/LineChartAge';
 export const MonthlyRevenuePenale = ({ keycloaks }) => {
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isShowing, setIsShowing] = useState(false);
 
     const [labeldata, setLabeldate] = useState(['أقل من 18', 'ما بين 19 و 30 سنة', 'ما بين 31 و 40 سنة', 'ما بين 41 و 50 سنة', 'ما بين 51 و 60 سنة', 'اكبر من 60 سنة']);
+    //const [labeldata, setLabeldate] = useState(['أقل من 18', 'ما بين 19 و 30 سنة', 'ما بين 40 و 31 سنة']);
 
 
     let [datamale, setDatamale] = useState([]);
     let [datafemale, setDatafemale] = useState([]);
 
-
+    let dMale=[];
+    let dFemale=[];
     useEffect(async () => {
-
+        dMale=[];
+        dFemale=[];
         setIsLoading(false);
 
 
         setDatamale([]);
         setDatafemale([]);
-
+        labeldata.map(obj => {
+            console.log(obj);            
+        });
         await markerData("inf", 18, "", "");
         await markerData("between", "", 19, 30);
         await markerData("between", "", 31, 40);
@@ -32,38 +38,36 @@ export const MonthlyRevenuePenale = ({ keycloaks }) => {
         await markerData("between", "", 51, 60);
         await markerData("sup", 60, "", "");
 
-
-
-
-
-
-        setDatamale(datamale);
-        setDatafemale(datafemale);
-        setIsLoading(true);
+        setIsShowing(true);
 
     }, []);
+
+    useEffect(async () => {
+       
+
+        setDatamale(dMale);
+        setDatafemale(dFemale);
+        setIsLoading(true);
+        console.log("dMale :"+datamale);
+        console.log("dFemale :"+datafemale);
+    }, [isShowing]);
 
     const markerData = async (type, age, age1, age2) => {
         if (type === 'inf') {
 
-
             fetchDataAgeInf(keycloaks, age).then((response) => {
                 console.log(response.data);
-
-
-                for (var i = 0; i < response.data.length; i++) {
-                    //console.log("response.data[i].count"+response.data[i].count);            
+                for (var i = 0; i < response.data.length; i++) {     
                     if (response.data[i].tcodsex === "1") {
-                        datamale.push(Number(response.data[i].count));
+                        dMale.push(Number(response.data[i].count));
 
                     } else {
-                        datafemale.push(Number(response.data[i].count));
+                        dFemale.push(Number(response.data[i].count));
 
 
                     }
                 }
-                //console.log(female); 
-                //console.log(male);              
+          
             }).catch((e) => {
                 console.log(e);
 
@@ -74,17 +78,14 @@ export const MonthlyRevenuePenale = ({ keycloaks }) => {
             fetchDataAgeSup(keycloaks, age).then((response) => {
                 console.log(response.data);
                 for (var i = 0; i < response.data.length; i++) {
-                    //console.log("response.data[i].count"+response.data[i].count);  
                     if (response.data[i].tcodsex === "1") {
-                        datamale.push(Number(response.data[i].count));
+                        dMale.push(Number(response.data[i].count));
 
                     } else {
-                        datafemale.push(Number(response.data[i].count));
+                        dFemale.push(Number(response.data[i].count));
 
                     }
-                }
-                //console.log(female); 
-                //console.log(male);          
+                }       
             }).catch((e) => {
                 console.log(e);
 
@@ -95,12 +96,11 @@ export const MonthlyRevenuePenale = ({ keycloaks }) => {
             fetchDataAgeBetween(keycloaks, age1, age2).then((response) => {
                 console.log(response.data);
                 for (var i = 0; i < response.data.length; i++) {
-                    //console.log("response.data[i].count"+response.data[i].count);  
                     if (response.data[i].tcodsex === "1") {
-                        datamale.push(Number(response.data[i].count));
+                        dMale.push(Number(response.data[i].count));
 
                     } else {
-                        datafemale.push(Number(response.data[i].count));
+                        dFemale.push(Number(response.data[i].count));
 
                     }
 

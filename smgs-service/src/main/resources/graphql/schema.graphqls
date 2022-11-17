@@ -1,3 +1,6 @@
+
+scalar Date
+
 type Query {
     jobsmsList : [JobSms],
     findJobSmsByIds(idJob : String) : JobSms
@@ -7,7 +10,7 @@ type JobSms{
     idJob: String,
     name: String,
     description: String,
-
+    jobStart: Date,
     jobStatus: JobStatus
     detailJobList: [DetailJob]
 }
@@ -17,6 +20,7 @@ type DetailJob{
     phoneNumber: String,
     froms: String,
     message: String,
+
     detailStatus: DetailStatus
 }
 
