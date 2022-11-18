@@ -71,6 +71,26 @@ export const fetchDataTerrorismes=(keycloak)=>{
     })
 }
 
+export const fetchDataEtrangers=(keycloak)=>{    
+    return instance({
+        method:'GET',
+        url:`/PENALE-SERVICE/api//stat/etranger/etrangers`,
+        headers:{
+            'Authorization':'Bearer '+keycloak.token
+        }
+    })
+}
+
+export const fetchDataUserpenale=(keycloak)=>{    
+    return instance({
+        method:'GET',
+        url:`/PENALE-SERVICE/api/stat/userpenale/users`,
+        headers:{
+            'Authorization':'Bearer '+keycloak.token
+        }
+    })
+}
+
 export const fetchDataNatureAffaire=(keycloak)=>{    
     return instance({
         method:'GET',

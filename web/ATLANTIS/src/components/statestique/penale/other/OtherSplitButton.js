@@ -4,6 +4,7 @@ import { Toast } from 'primereact/toast';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 
 import { Terrorisme } from './Terrorisme';
+import { Etranger } from './Etranger';
 import '../css/SpeedDial.css'
 
 
@@ -13,18 +14,31 @@ export const OtherSplitButton = ({ keycloaks }) => {
     const [visible, setVisible] = useState(false);
     const toast = useRef(null);
     
-    function struct() { 
+    function structTerrorisme() { 
         return (
             <Terrorisme keycloaks={keycloaks}/>
         );
     }
     
+    function structEtranger() { 
+        return (
+            <Etranger keycloaks={keycloaks}/>
+        );
+    }
     
-    const confirmPosition = (position) => {
+    const confirmPositionTerrorisme = (position) => {
         confirmDialog({
-
-            message: struct(),
+            message: structTerrorisme(),
             header: 'توزيع المساجين المتعلقة بهم قضايا ارهابية',
+            //icon: 'pi pi-info-circle',
+            position
+        });
+    };
+
+    const confirmPositionEtranger = (position) => {
+        confirmDialog({
+            message: structEtranger(),
+            header: 'توزيع المساجين الأجانب',
             //icon: 'pi pi-info-circle',
             position
         });
@@ -36,7 +50,7 @@ export const OtherSplitButton = ({ keycloaks }) => {
             icon: 'pi pi-pencil',
 
             command: () => {
-                confirmPosition('top');
+                confirmPositionTerrorisme('top');
                 //toast.current.show({ severity: 'info', summary: 'Add', detail: 'Data Added' });
             }
         },
@@ -44,29 +58,8 @@ export const OtherSplitButton = ({ keycloaks }) => {
             label: 'Update',
             icon: 'pi pi-refresh',
             command: () => {
+                confirmPositionEtranger('bottom');
                 //toast.current.show({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
-            }
-        },
-        {
-            label: 'Delete',
-            icon: 'pi pi-trash',
-
-            command: () => {
-                //toast.current.show({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
-            }
-        },
-        {
-            label: 'Upload',
-            icon: 'pi pi-upload',
-            command: () => {
-                //window.location.hash = "/fileupload"
-            }
-        },
-        {
-            label: 'React Website',
-            icon: 'pi pi-external-link',
-            command: () => {
-                //window.location.href = 'https://facebook.github.io/react/'
             }
         }
     ];

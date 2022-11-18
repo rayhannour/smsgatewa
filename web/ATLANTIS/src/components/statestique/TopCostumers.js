@@ -29,8 +29,8 @@ export const TopCostumers = () => {
         
 
         setCustomerCarousel([
-            { user: '9,673 Users', value: '$8,362,478', image: 'nasa' },
-            { user: '9,395 Users', value: '$7,927,105', image: 'beats' },
+            { user: '9,673 Users', value: '$8,362,478', image: 'armoirie' },
+            { user: '9,395 Users', value: '$7,927,105', image: 'justice' },
             { user: '7,813 Users', value: '$6,471,594', image: 'gopro' },
             { user: '7,613 Users', value: '$5,697,883', image: 'north' },
             { user: '98,673 Users', value: '$7,653,311', image: 'mc' },

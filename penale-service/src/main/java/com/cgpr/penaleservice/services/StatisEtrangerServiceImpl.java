@@ -1,33 +1,33 @@
 package com.cgpr.penaleservice.services;
 
-import com.cgpr.penaleservice.dto.StatTerrorimeChartDTO;
-import com.cgpr.penaleservice.dto.StatTerrorimePrisonDTO;
-import com.cgpr.penaleservice.dto.StatTerrorismeResponceChartTetatDTO;
-import com.cgpr.penaleservice.dto.TerrorismeResponceDTO;
-import com.cgpr.penaleservice.entities.Prison;
-import com.cgpr.penaleservice.entities.StatTerrorisme;
-import com.cgpr.penaleservice.entities.StatTerrorismePrison;
-import org.hibernate.Session;
-import org.springframework.stereotype.Service;
+        import com.cgpr.penaleservice.dto.StatTerrorimeChartDTO;
+        import com.cgpr.penaleservice.dto.StatTerrorimePrisonDTO;
+        import com.cgpr.penaleservice.dto.StatTerrorismeResponceChartTetatDTO;
+        import com.cgpr.penaleservice.dto.TerrorismeResponceDTO;
+        import com.cgpr.penaleservice.entities.Prison;
+        import com.cgpr.penaleservice.entities.StatTerrorisme;
+        import com.cgpr.penaleservice.entities.StatTerrorismePrison;
+        import org.hibernate.Session;
+        import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+        import javax.persistence.EntityManager;
+        import javax.persistence.PersistenceContext;
+        import javax.persistence.Query;
+        import java.util.ArrayList;
+        import java.util.List;
+        import java.util.concurrent.atomic.AtomicLong;
 
 @Service
-public class StatisTerrorismeServiceImpl implements StatisTerrorismeService {
+public class StatisEtrangerServiceImpl implements StatisEtrangerService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public StatisTerrorismeServiceImpl(EntityManager entityManager) {
+    public StatisEtrangerServiceImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public TerrorismeResponceDTO getStatGeneralTerrorisme(){
+    public TerrorismeResponceDTO getStatGeneralEtranger(){
 
         List<Prison> prisons=this.getListPrison();
 
@@ -103,23 +103,20 @@ public class StatisTerrorismeServiceImpl implements StatisTerrorismeService {
     private StatTerrorimePrisonDTO statTerrorimePrisonDTO( StatTerrorimePrisonDTO statTerrorimePrisonDTO, List<StatTerrorismePrison> terrorisme){
         terrorisme.forEach(
                 t->{
+                    if(t.getTcodgou().equals(statTerrorimePrisonDTO.getTcodgou())
+                            && t.getTcodpr().equals(statTerrorimePrisonDTO.getTcodpr())){
+                        Long countJuger=statTerrorimePrisonDTO.getCountJuger();
+                        Long countArreter= statTerrorimePrisonDTO.getCountArreter();
+                        if(countJuger==null) countJuger=0L;
+                        if(countArreter==null) countArreter=0L;
 
-
-
-                              if(t.getTcodgou().equals(statTerrorimePrisonDTO.getTcodgou())
-                              && t.getTcodpr().equals(statTerrorimePrisonDTO.getTcodpr())){
-                                  Long countJuger=statTerrorimePrisonDTO.getCountJuger();
-                                  Long countArreter= statTerrorimePrisonDTO.getCountArreter();
-                                  if(countJuger==null) countJuger=0L;
-                                  if(countArreter==null) countArreter=0L;
-
-                                  if(t.getTetat().equals("A")){
-                                      statTerrorimePrisonDTO.setCountArreter(Long.sum(countArreter, t.getCounts()));
-                                  }
-                                  if(t.getTetat().equals("J")){
-                                      statTerrorimePrisonDTO.setCountJuger(Long.sum(countJuger, t.getCounts()));
-                                  }
-                              }
+                        if(t.getTetat().equals("A")){
+                            statTerrorimePrisonDTO.setCountArreter(Long.sum(countArreter, t.getCounts()));
+                        }
+                        if(t.getTetat().equals("J")){
+                            statTerrorimePrisonDTO.setCountJuger(Long.sum(countJuger, t.getCounts()));
+                        }
+                    }
 
 
 
@@ -128,11 +125,11 @@ public class StatisTerrorismeServiceImpl implements StatisTerrorismeService {
         );
 
 
-return statTerrorimePrisonDTO;
+        return statTerrorimePrisonDTO;
     }
 
     public List<StatTerrorisme> getStatTerrorismeSexe(String tcodsex){
-        String nativeQueryEntrant="Terrorisme.Sexe";
+        String nativeQueryEntrant="Etranger.Sexe";
         Query query = this.entityManager.createNamedQuery(nativeQueryEntrant);
         query.setParameter(1,tcodsex);
         List<StatTerrorisme> list = query.getResultList();
@@ -141,7 +138,7 @@ return statTerrorimePrisonDTO;
     }
 
     public List<StatTerrorismePrison> getStatTerrorismePrison(String tcodsex,String tetat){
-        String nativeQueryEntrant="Terrorisme.Prison";
+        String nativeQueryEntrant="Etranger.Prison";
         Query query = this.entityManager.createNamedQuery(nativeQueryEntrant);
         query.setParameter(1,tcodsex);
         query.setParameter(2,tetat);

@@ -50,16 +50,43 @@ export const TransactionHistoryPenale = ({ keycloaks }) => {
 
     const markerColor = (prison, count, maxdetenu) => {
         let datas = any;
-        if (count >= maxdetenu) {
+
+
+        let counts = count + 0;
+        let maxdetenus = maxdetenu + 0;
+
+
+
+        if (counts < maxdetenus) {
+
             datas = {
-                transaction: prison, amount: count, date: maxdetenu,
+                transaction: prison + '  (' + count + ')', amount: 'طاقة الإكتضاض مواتية', date: 'طاقة الإستيعاب' + '(' + maxdetenu + ')',
                 icon: 'pi pi-check', iconColor: '#0F8BFD', amountColor: '#00D0DE'
             };
-        } else datas = {
-            transaction: prison, amount: count, date: maxdetenu,
-            icon: 'pi pi-exclamation-triangle', iconColor: '#EC4DBC', amountColor: '#EC4DBC'
-        };
+        } else {
+            var d = counts * 100 / maxdetenus;
+            var s = Number(d / 100).toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 });
+            
+            if(d<150){
+                {
 
+                    datas = {
+                        transaction: prison + '  (' + count + ')', amount: 'نسبة الإكتضاض ' + '(' + s + ')', date: 'طاقة الإستيعاب' + '(' + maxdetenu + ')',
+                        icon: 'pi pi-minus', iconColor: '#FC6161', amountColor: '#FC6161'
+                    };                    
+                } 
+            }else{
+                datas = {
+                    transaction: prison + '  (' + count + ')', amount: 'نسبة الإكتضاض ' + '(' + s + ')', date: 'طاقة الإستيعاب' + '(' + maxdetenu + ')',
+                    icon: 'pi pi-exclamation-triangle', iconColor: '#EC4DBC', amountColor: '#EC4DBC'
+                };
+            }
+
+                       
+            
+            
+            
+        }
         return datas;
     }
 
@@ -96,24 +123,24 @@ export const TransactionHistoryPenale = ({ keycloaks }) => {
     return (
 
         <>
-            
+
 
 
             <div className="card widget-timeline">
-                        <div className="timeline-header flex justify-content-between align-items-center">
-                            <p>Transaction history</p>
-                            <div className="header-icons">
-                                <i className="pi pi-refresh"></i>
-                                <i className="pi pi-filter"></i>
-                            </div>
-                        </div>
-                        <div className="timeline-content">
-                        <Timeline value={timelineEventsFistTen} marker={marker} content={content} className="custimized-timeline" />
-                        </div>
-                        <div className="timeline-footer flex align-items-center justify-content-center">
-                        <button className="p-link" onClick={handleClick} >View all transactions <i className="pi pi-arrow-down"></i></button>
-                        </div>
+                <div className="timeline-header flex justify-content-between align-items-center">
+                    <p>Transaction history</p>
+                    <div className="header-icons">
+                        <i className="pi pi-refresh"></i>
+                        <i className="pi pi-filter"></i>
                     </div>
+                </div>
+                <div className="timeline-content">
+                    <Timeline value={timelineEventsFistTen} marker={marker} content={content} className="custimized-timeline" />
+                </div>
+                <div className="timeline-footer flex align-items-center justify-content-center">
+                    <button className="p-link" onClick={handleClick} >View all transactions <i className="pi pi-arrow-down"></i></button>
+                </div>
+            </div>
 
 
 

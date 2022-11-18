@@ -1,10 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Calendar } from 'primereact/calendar';
+
+import { Button } from 'primereact/button';
+
+import './ButtonDemo.css';
 
 const AppRightPanel = (props) => {
 
-	const [date, setDate] = useState(null);
+	const [day, setDay] = useState(null);
+	const [mounth, seMounth] = useState(null);
+	const [year, setYear] = useState(null);
+
+	const d = new Date();
+	
+    useEffect(async () => {
+        setDay( d.getDate());
+		seMounth( d.getMonth()+1);
+		setYear(d.getFullYear());
+    }, []);
 
 
 	return (
@@ -13,50 +26,87 @@ const AppRightPanel = (props) => {
 				<i className="pi pi-times"></i>
 			</button>
 			<div className="user-detail-wrapper">
+
+
 				<div className="user-detail-content">
-					<img src="assets/layout/images/dashboard/gene.png" alt="atlantis" className="user-image" />
-					<span className="user-name">Gene Russell</span>
-					<span className="user-number">(406) 555-0120</span>
+
+					<span className="user-name">المنظومات الأخرى</span>
+					<span className="user-number">التاريخ</span>
 				</div>
+
 				<div className="user-tasks">
 					<div className="user-tasks-item in-progress">
-						<button className="task-number p-link">23</button>
-						<span className="task-name">Progress</span>
+						<button className="task-number p-link">{day}</button>
+						<span className="task-name"></span>
 					</div>
 					<div className="user-tasks-item">
-						<button className="task-number p-link">6</button>
-						<span className="task-name">Overdue</span>
+						<button className="task-number p-link">{mounth}</button>
+						<span className="task-name"></span>
 					</div>
 					<div className="user-tasks-item">
-						<button className="task-number p-link">38</button>
-						<span className="task-name">All deals</span>
+						<button className="task-number p-link">{year}</button>
+						<span className="task-name"></span>
 					</div>
 				</div>
+
+				<div className="user-tasks">
+					<div className="col-12 md:col-12">
+						<div className="card widget-overview-box ">
+							<span className="overview-title">
+								منظومة البريد التونسي
+								<br />
+							</span>
+							<div >
+								<div style={{ align: "center" }}>
+									<Button style={{ width: "100px", height: "100px" }} icon="pi pi-euro" className="p-button-rounded p-button-success" aria-label="Search" />
+								</div>
+							</div>
+							<br />
+							<br />
+		
+						</div>
+					</div>
+				</div>
+
+				<div className="user-tasks">
+					<div className="col-12 md:col-12">
+						<div className="card widget-overview-box ">
+							<span className="overview-title">
+								منظومة الأطفال الجانحين
+								<br />
+							</span>
+							<div >
+								<div style={{ align: "center" }}>
+								<Button style={{ width: "100px", height: "100px" }}  icon="pi pi-user-minus" className="p-button-rounded p-button-danger" aria-label="Cancel" />
+								</div>
+							</div>
+							<br />
+							<br />
+						</div>
+					</div>
+				</div>
+
+				<div className="user-tasks">
+					<div className="col-12 md:col-12">
+						<div className="card widget-overview-box ">
+							<span className="overview-title">
+								منظومة التصرف في الأعوان
+								<br />
+							</span>
+							<div >
+								<div style={{ align: "center" }}>
+								<Button style={{ width: "100px", height: "100px" }}  icon="pi pi-users" className="p-button-rounded p-button-warning" aria-label="Notification" />
+								</div>
+							</div>
+							<br />
+							<br />
+						</div>
+					</div>
+				</div>
+
+
 			</div>
-			<div>
-				<Calendar value={date} onChange={(e) => setDate(e.value)} inline></Calendar>
-			</div>
-			<div className="daily-plan-wrapper">
-				<span className="today-date">14 Sunday, Jun 2020</span>
-				<ul>
-					<li>
-						<span className="event-time">1:00 PM - 2:00 PM</span>
-						<span className="event-topic">Meeting with Alfredo Rhiel Madsen</span>
-					</li>
-					<li>
-						<span className="event-time">2:00 PM - 3:00 PM</span>
-						<span className="event-topic">Team Sync</span>
-					</li>
-					<li>
-						<span className="event-time">5:00 PM - 6:00 PM</span>
-						<span className="event-topic">Team Sync</span>
-					</li>
-					<li>
-						<span className="event-time">7:00 PM - 7:30 PM</span>
-						<span className="event-topic">Meeting with Engineering managers</span>
-					</li>
-				</ul>
-			</div>
+
 		</div>
 	)
 }

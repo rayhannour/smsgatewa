@@ -14,7 +14,11 @@ import java.util.List;
                 name = "Terrorisme.Sexe",
                 query =
                         "select count(*) counts,tcodsex,tetat from tjugearret where tcodtaf in('01') and tetat in('A','J') and tcodsex=? group by tcodsex,tetat", resultClass = StatTerrorisme.class
-        )
+        ),@NamedNativeQuery(
+        name = "Etranger.Sexe",
+        query =
+                "select count(*) counts,tcodsex,tetat from tjugearret where tcodnat not in('001') and tetat in('A','J') and tcodsex=? group by tcodsex,tetat", resultClass = StatTerrorisme.class
+)
 
 })
 

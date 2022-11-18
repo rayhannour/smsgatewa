@@ -22,6 +22,7 @@ import { Statispr, GetStatGlobalRequest, GetStatListResponse, GetStatJourRequest
 import { StatisprisonServiceClient } from '../protopb/statisprison_grpc_web_pb';
 
 import { OtherSplitButton } from './statestique/penale/other/OtherSplitButton';
+import { YearlyWinPenale } from './statestique/penale/YearlyWinPenale';
 
 
 
@@ -56,10 +57,14 @@ export const Dashboard = () => {
 
             <div className="layout-dashboard">
                 <div className="grid">
-
+                    
+                    
+                    
                     <OtherSplitButton keycloaks={keycloak} />
-
-
+                    
+                    
+                    
+                    
                     <BlocArragePenale keycloaks={keycloak} />
                     <VisitorPenale keycloaks={keycloak} />
 
@@ -72,7 +77,7 @@ export const Dashboard = () => {
                     <MonthlyRevenuePenale keycloaks={keycloak} />
                     <VisitorEntrantSortantPenale keycloaks={keycloak} />
 
-                    <YearlyWin />
+                    <YearlyWinPenale keycloaks={keycloak}/>
 
                     <QuartlyWin />
 
