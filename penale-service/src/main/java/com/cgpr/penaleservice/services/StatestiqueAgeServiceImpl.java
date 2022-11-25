@@ -27,7 +27,7 @@ public class StatestiqueAgeServiceImpl implements StatestiqueAgeService {
 
     @Override
     public List<StatAge> getStatGeneralAgeInf(String age) {
-        String nativeQuery="select * from (select count(*) COUNT,TCODSEX from tjugearret where TAGE<= :age group by TCODSEX) order by COUNT desc ";
+        String nativeQuery="select * from (select count(*) COUNT,TCODSEX from tjugearret  where tetat in('A','J') and TAGE<= :age group by TCODSEX) order by COUNT desc ";
         Session session = this.entityManager.unwrap( Session.class );
         List<StatAge> list = session.createNativeQuery(nativeQuery ).setParameter("age",age) .addEntity( StatAge.class ).list();
         return list;
@@ -36,7 +36,7 @@ public class StatestiqueAgeServiceImpl implements StatestiqueAgeService {
 
     @Override
     public List<StatAge> getStatGeneralAgeSup(String age) {
-        String nativeQuery="select * from (select count(*) COUNT,TCODSEX from tjugearret where TAGE> :age group by TCODSEX) order by COUNT desc ";
+        String nativeQuery="select * from (select count(*) COUNT,TCODSEX from tjugearret where tetat in('A','J') and TAGE> :age group by TCODSEX) order by COUNT desc ";
         Session session = this.entityManager.unwrap( Session.class );
         List<StatAge> list = session.createNativeQuery(nativeQuery ).setParameter("age",age) .addEntity( StatAge.class ).list();
         return list;
@@ -44,7 +44,7 @@ public class StatestiqueAgeServiceImpl implements StatestiqueAgeService {
 
     @Override
     public List<StatAge> getStatGeneralAgeBetween(String age1, String age2) {
-        String nativeQuery="select * from (select count(*) COUNT,TCODSEX from tjugearret where TAGE between :age1 and :age2 group by TCODSEX) order by COUNT desc ";
+        String nativeQuery="select * from (select count(*) COUNT,TCODSEX from tjugearret where tetat in('A','J') and TAGE between :age1 and :age2 group by TCODSEX) order by COUNT desc ";
         Session session = this.entityManager.unwrap( Session.class );
         List<StatAge> list = session.createNativeQuery(nativeQuery ).setParameter("age1",age1).setParameter("age2",age2) .addEntity( StatAge.class ).list();
         return list;

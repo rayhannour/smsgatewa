@@ -60,7 +60,7 @@ export const Dashboard = () => {
                     
                     
                     
-                    <OtherSplitButton keycloaks={keycloak} />
+                    
                     
                     
                     
@@ -77,13 +77,7 @@ export const Dashboard = () => {
                     <MonthlyRevenuePenale keycloaks={keycloak} />
                     <VisitorEntrantSortantPenale keycloaks={keycloak} />
 
-                    <YearlyWinPenale keycloaks={keycloak}/>
-
-                    <QuartlyWin />
-
-                    
-
-                    <TopCostumers />
+                   
                 </div>
             </div>
         </>

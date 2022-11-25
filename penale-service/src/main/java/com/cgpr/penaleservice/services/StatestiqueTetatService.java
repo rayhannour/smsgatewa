@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface StatestiqueTetatService {
     public List<StatGeneralTetat> getStatGeneralTetat();
+    public List<StatGeneralTetat> getStatGeneralTcodtyp();
     public List<StatGeneralTetat> getStatGeneralPrison();
     public List<StatGeneralTetat> getStatGeneralNatureAffaire();
+
 }

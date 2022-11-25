@@ -22,6 +22,17 @@ export const fetchDataTetat=(keycloak)=>{
     })
 }
 
+export const fetchDataTcodtyp=(keycloak)=>{    
+    console.log(keycloak.token);
+    return instance({
+        method:'GET',
+        url:'/PENALE-SERVICE/api/stat/tcodtyp',
+        headers:{
+            Authorization: "Bearer " + keycloak.token
+        }
+    })
+}
+
 export const fetchDataPrison=(keycloak)=>{    
     return instance({
         method:'GET',
@@ -74,7 +85,17 @@ export const fetchDataTerrorismes=(keycloak)=>{
 export const fetchDataEtrangers=(keycloak)=>{    
     return instance({
         method:'GET',
-        url:`/PENALE-SERVICE/api//stat/etranger/etrangers`,
+        url:`/PENALE-SERVICE/api/stat/etranger/etrangers`,
+        headers:{
+            'Authorization':'Bearer '+keycloak.token
+        }
+    })
+}
+
+export const fetchDataEtrangersAfricain=(keycloak)=>{    
+    return instance({
+        method:'GET',
+        url:`/PENALE-SERVICE/api/stat/etranger/etrangersafricain`,
         headers:{
             'Authorization':'Bearer '+keycloak.token
         }

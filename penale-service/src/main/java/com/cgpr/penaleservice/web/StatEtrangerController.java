@@ -22,11 +22,15 @@ public class StatEtrangerController {
     }
 
     @GetMapping("/etrangers")
-    public TerrorismeResponceDTO getStatTerrorisme()  {
+    public TerrorismeResponceDTO getStatEtranger()  {
         TerrorismeResponceDTO lst=this.statisEtrangerService.getStatGeneralEtranger();
         return lst;
     }
-
+    @GetMapping("/etrangersafricain")
+    public TerrorismeResponceDTO getStatEtrangerAfricain()  {
+        TerrorismeResponceDTO lst=this.statisEtrangerService.getStatGeneralEtrangerAfricain();
+        return lst;
+    }
 
 
 }

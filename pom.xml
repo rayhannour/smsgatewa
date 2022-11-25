@@ -8,6 +8,7 @@
         <module>gateway-service</module>
         <module>penale-service</module>
         <module>smgs-service</module>
+        <module>poste-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

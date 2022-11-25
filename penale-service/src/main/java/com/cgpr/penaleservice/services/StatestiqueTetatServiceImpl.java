@@ -30,7 +30,17 @@ public class StatestiqueTetatServiceImpl implements StatestiqueTetatService {
 
     @Override
     public List<StatGeneralTetat> getStatGeneralTetat() {
-        String nativeQuery="select count(*) COUNT,tetat TETAT from tjugearret group by TETAT";
+        String nativeQuery="select count(*) COUNT,tetat TETAT from tjugearret where tetat in('A','J')  group by TETAT";
+        Session session = this.entityManager.unwrap( Session.class );
+        List<StatGeneralTetat> list = session.createNativeQuery(nativeQuery ).addEntity( StatGeneralTetat.class ).list();
+
+        return list;
+
+    }
+
+    @Override
+    public List<StatGeneralTetat> getStatGeneralTcodtyp() {
+        String nativeQuery="select count(*) COUNT,tcodtyp TETAT from tjugearret where tetat in('A','J')  group by tcodtyp";
         Session session = this.entityManager.unwrap( Session.class );
         List<StatGeneralTetat> list = session.createNativeQuery(nativeQuery ).addEntity( StatGeneralTetat.class ).list();
 
@@ -41,7 +51,7 @@ public class StatestiqueTetatServiceImpl implements StatestiqueTetatService {
     @Override
     public List<StatGeneralTetat> getStatGeneralPrison() {
         List<Prison> lstPrison=this.getListPrison();
-        String nativeQuery="select count(*) COUNT,getLibellePrison(tcodgou,tcodpr) TETAT from tjugearret group by getLibellePrison(tcodgou,tcodpr)";
+        String nativeQuery="select count(*) COUNT,getLibellePrison(tcodgou,tcodpr) TETAT from tjugearret where tetat in('A','J') group by getLibellePrison(tcodgou,tcodpr)";
         Session session = this.entityManager.unwrap( Session.class );
         List<StatGeneralTetat> list = session.createNativeQuery(nativeQuery ).addEntity( StatGeneralTetat.class ).list();
 
@@ -59,7 +69,7 @@ public class StatestiqueTetatServiceImpl implements StatestiqueTetatService {
     @Override
     public List<StatGeneralTetat> getStatGeneralNatureAffaire() {
 
-        String nativeQuery="select * from (select count(*) COUNT,getLibelle_natureaffaire(tcodtaf) TETAT from tjugearret group by getLibelle_natureaffaire(tcodtaf)) order by count desc";
+        String nativeQuery="select * from (select count(*) COUNT,getLibelle_natureaffaire(tcodtaf) TETAT from tjugearret where tetat in('A','J') group by getLibelle_natureaffaire(tcodtaf)) order by count desc";
         Session session = this.entityManager.unwrap( Session.class );
         List<StatGeneralTetat> list = session.createNativeQuery(nativeQuery ).addEntity( StatGeneralTetat.class ).list();
 

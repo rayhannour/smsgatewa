@@ -21,7 +21,11 @@ import javax.persistence.NamedNativeQuery;
         query =
                 "select count(*) counts,getLibellePrison(tcodgou,tcodpr) prison ,tetat,tcodgou,tcodpr  from tjugearret where tcodnat not in('001') and tcodsex=? and tetat=?  group by getLibellePrison(tcodgou,tcodpr),tetat,tcodgou,tcodpr", resultClass = StatTerrorismePrison.class
 )
-
+        ,@NamedNativeQuery(
+        name = "Affricain.Prison",
+        query =
+                "select count(*) counts,getLibellePrison(tcodgou,tcodpr) prison ,tetat,tcodgou,tcodpr  from tjugearret where tcodnat in(select code_nationalite from nationalite where cn='AF') and tcodsex=? and tetat=?  group by getLibellePrison(tcodgou,tcodpr),tetat,tcodgou,tcodpr", resultClass = StatTerrorismePrison.class
+)
 })
 @NoArgsConstructor
 @AllArgsConstructor

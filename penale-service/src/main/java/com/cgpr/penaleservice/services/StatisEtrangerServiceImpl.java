@@ -32,8 +32,8 @@ public class StatisEtrangerServiceImpl implements StatisEtrangerService {
         List<Prison> prisons=this.getListPrison();
 
         TerrorismeResponceDTO terrorismeResponceDTO=new TerrorismeResponceDTO();
-        List<StatTerrorisme> sexeChartMasculin= getStatTerrorismeSexe("1");
-        List<StatTerrorisme> sexeChartFeminin= getStatTerrorismeSexe("0");
+        List<StatTerrorisme> sexeChartMasculin= getStatEtrangerSexe("1","ALL");
+        List<StatTerrorisme> sexeChartFeminin= getStatEtrangerSexe("0","ALL");
 
         List<StatTerrorimeChartDTO> statTerrorimeChartDTOS=new ArrayList<>();
         List<StatTerrorimePrisonDTO> statTerrorimePrisonDTOS=new ArrayList<>();
@@ -60,11 +60,11 @@ public class StatisEtrangerServiceImpl implements StatisEtrangerService {
         );
 
         terrorismeResponceDTO.setStatTerrorimeChartDTOS(statTerrorimeChartDTOS);
-        List<StatTerrorismePrison> terrorismeJugerMale= this.getStatTerrorismePrison("1","J");
-        List<StatTerrorismePrison> terrorismeJugerFemale= this.getStatTerrorismePrison("0","J");
+        List<StatTerrorismePrison> terrorismeJugerMale= this.getStatEtrangerPrison("1","J","ALL");
+        List<StatTerrorismePrison> terrorismeJugerFemale= this.getStatEtrangerPrison("0","J","ALL");
 
-        List<StatTerrorismePrison> terrorismeArreterMale= this.getStatTerrorismePrison("1","A");
-        List<StatTerrorismePrison> terrorismeArreterFemale= this.getStatTerrorismePrison("0","A");
+        List<StatTerrorismePrison> terrorismeArreterMale= this.getStatEtrangerPrison("1","A","ALL");
+        List<StatTerrorismePrison> terrorismeArreterFemale= this.getStatEtrangerPrison("0","A","ALL");
 
 
         prisons.forEach(
@@ -100,6 +100,80 @@ public class StatisEtrangerServiceImpl implements StatisEtrangerService {
         return terrorismeResponceDTO;
     }
 
+
+    @Override
+    public TerrorismeResponceDTO getStatGeneralEtrangerAfricain(){
+
+        List<Prison> prisons=this.getListPrison();
+
+        TerrorismeResponceDTO terrorismeResponceDTO=new TerrorismeResponceDTO();
+        List<StatTerrorisme> sexeChartMasculin= getStatEtrangerSexe("1","AF");
+        List<StatTerrorisme> sexeChartFeminin= getStatEtrangerSexe("0","AF");
+
+        List<StatTerrorimeChartDTO> statTerrorimeChartDTOS=new ArrayList<>();
+        List<StatTerrorimePrisonDTO> statTerrorimePrisonDTOS=new ArrayList<>();
+        sexeChartMasculin.forEach(
+                statTerrorisme->{
+                    StatTerrorimeChartDTO statTerrorimeChartDTO=  StatTerrorimeChartDTO.builder()
+                            .counts(statTerrorisme.getCounts())
+                            .tetat(statTerrorisme.getTetat())
+                            .tcodsex(statTerrorisme.getTcodsex())
+                            .build();
+                    statTerrorimeChartDTOS.add(statTerrorimeChartDTO);
+                }
+        );
+
+        sexeChartFeminin.forEach(
+                statTerrorisme->{
+                    StatTerrorimeChartDTO statTerrorimeChartDTO=  StatTerrorimeChartDTO.builder()
+                            .counts(statTerrorisme.getCounts())
+                            .tetat(statTerrorisme.getTetat())
+                            .tcodsex(statTerrorisme.getTcodsex())
+                            .build();
+                    statTerrorimeChartDTOS.add(statTerrorimeChartDTO);
+                }
+        );
+
+        terrorismeResponceDTO.setStatTerrorimeChartDTOS(statTerrorimeChartDTOS);
+        List<StatTerrorismePrison> terrorismeJugerMale= this.getStatEtrangerPrison("1","J","AF");
+        List<StatTerrorismePrison> terrorismeJugerFemale= this.getStatEtrangerPrison("0","J","AF");
+
+        List<StatTerrorismePrison> terrorismeArreterMale= this.getStatEtrangerPrison("1","A","AF");
+        List<StatTerrorismePrison> terrorismeArreterFemale= this.getStatEtrangerPrison("0","A","AF");
+
+
+        prisons.forEach(
+                p->{
+                    StatTerrorimePrisonDTO statTerrorimePrison=new StatTerrorimePrisonDTO();
+                    statTerrorimePrison.setPrison(p.getLIBELLE_PRISON());
+                    statTerrorimePrison.setTcodpr(p.getCODE_PRISON());
+                    statTerrorimePrison.setTcodgou(p.getCODE_GOUVERNORAT());
+                    statTerrorimePrison=statTerrorimePrisonDTO(statTerrorimePrison, terrorismeJugerMale);
+                    statTerrorimePrison=statTerrorimePrisonDTO(statTerrorimePrison, terrorismeJugerFemale);
+                    statTerrorimePrison= statTerrorimePrisonDTO(statTerrorimePrison, terrorismeArreterMale);
+                    statTerrorimePrison=statTerrorimePrisonDTO(statTerrorimePrison, terrorismeArreterFemale);
+
+                    StatTerrorimePrisonDTO statTerrorimePrisonDTO=StatTerrorimePrisonDTO.builder()
+                            .prison(p.getLIBELLE_PRISON())
+                            .tcodgou(p.getCODE_GOUVERNORAT())
+                            .tcodpr(p.getCODE_PRISON())
+                            .countArreter(statTerrorimePrison.getCountArreter())
+                            .countJuger(statTerrorimePrison.getCountJuger())
+                            .build();
+
+                    if(statTerrorimePrisonDTO.getCountArreter()!=null && statTerrorimePrisonDTO.getCountJuger()!=null){
+                        statTerrorimePrisonDTOS.add(statTerrorimePrisonDTO);
+                    }
+
+
+
+                }
+        );
+
+        terrorismeResponceDTO.setStatTerrorimePrisonDTOS(statTerrorimePrisonDTOS);
+
+        return terrorismeResponceDTO;
+    }
     private StatTerrorimePrisonDTO statTerrorimePrisonDTO( StatTerrorimePrisonDTO statTerrorimePrisonDTO, List<StatTerrorismePrison> terrorisme){
         terrorisme.forEach(
                 t->{
@@ -128,8 +202,13 @@ public class StatisEtrangerServiceImpl implements StatisEtrangerService {
         return statTerrorimePrisonDTO;
     }
 
-    public List<StatTerrorisme> getStatTerrorismeSexe(String tcodsex){
+    public List<StatTerrorisme> getStatEtrangerSexe(String tcodsex,String typeetranger){
         String nativeQueryEntrant="Etranger.Sexe";
+
+        if(typeetranger.equals("AF")){
+            nativeQueryEntrant="Affricain.Sexe";
+        }
+
         Query query = this.entityManager.createNamedQuery(nativeQueryEntrant);
         query.setParameter(1,tcodsex);
         List<StatTerrorisme> list = query.getResultList();
@@ -137,8 +216,13 @@ public class StatisEtrangerServiceImpl implements StatisEtrangerService {
         return list;
     }
 
-    public List<StatTerrorismePrison> getStatTerrorismePrison(String tcodsex,String tetat){
+    public List<StatTerrorismePrison> getStatEtrangerPrison(String tcodsex,String tetat,String typeetranger){
         String nativeQueryEntrant="Etranger.Prison";
+
+        if(typeetranger.equals("AF")){
+            nativeQueryEntrant="Affricain.Prison";
+        }
+
         Query query = this.entityManager.createNamedQuery(nativeQueryEntrant);
         query.setParameter(1,tcodsex);
         query.setParameter(2,tetat);

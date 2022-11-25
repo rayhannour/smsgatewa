@@ -27,6 +27,10 @@ public class StatGeneralTetatController {
 	public List<StatGeneralTetat> getStatGeneralTetat()  {
 		return this.statestiqueTetatService.getStatGeneralTetat();
 	}
+	@GetMapping("/tcodtyp")
+	public List<StatGeneralTetat> getStatGeneralTcodtyp()  {
+		return this.statestiqueTetatService.getStatGeneralTcodtyp();
+	}
 
 	@GetMapping("/prison")
 	public List<StatGeneralTetat> getStatGeneralPrison()  {

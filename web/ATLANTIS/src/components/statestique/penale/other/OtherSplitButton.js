@@ -6,7 +6,7 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Terrorisme } from './Terrorisme';
 import { Etranger } from './Etranger';
 import '../css/SpeedDial.css'
-
+import { Tooltip } from 'primereact/tooltip';
 
 
 
@@ -46,8 +46,8 @@ export const OtherSplitButton = ({ keycloaks }) => {
 
     const items = [
         {
-            label: 'Add',
-            icon: 'pi pi-pencil',
+            label: 'الإرهاب',
+            icon: 'pi pi-user-plus',
 
             command: () => {
                 confirmPositionTerrorisme('top');
@@ -55,8 +55,8 @@ export const OtherSplitButton = ({ keycloaks }) => {
             }
         },
         {
-            label: 'Update',
-            icon: 'pi pi-refresh',
+            label: 'الأجانب',
+            icon: 'pi pi-users',
             command: () => {
                 confirmPositionEtranger('bottom');
                 //toast.current.show({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
@@ -70,9 +70,10 @@ export const OtherSplitButton = ({ keycloaks }) => {
             <Toast ref={toast} />
 
             <div className="col-12 md:col-12">
-                <div className="speeddial-linear-demo" style={{ position: 'relative', height: '50px' }}>
-                    <SpeedDial model={items} direction="right" />
-                </div>
+                <div className="speeddial-tooltip-demo" style={{ position: 'relative', height: '50px' }}>
+                    <Tooltip target=".speeddial-tooltip-demo .speeddial-left .p-speeddial-action" />
+                    <SpeedDial model={items} direction="right" className="speeddial-left" buttonClassName="p-button-help" />
+                </div>                
                 <ConfirmDialog style={{ width: '65vw' }} visible={visible} onHide={() => setVisible(false)} 
                     header="Confirmation" icon="pi pi-exclamation-triangle"  />
             </div>

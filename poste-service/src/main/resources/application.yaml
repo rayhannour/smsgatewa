@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: poste-service
+  cloud:
+    config:
+      uri: http://localhost:8888
+      profile: local, prod
+    discovery:
+      enabled: true
+  data:
+    rest:
+      return-body-on-create: true
+      return-body-on-update: true
+  rabbitmq:
+    host: localhost
+    username: user
+    password: user
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://192.168.100.218:8080/auth/realms/penale-realm
+          jwk-set-uri: http://192.168.100.218:8080/auth/realms/penale-realm/.well-known/openid-configuration
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  port: 8086
+  servlet:
+    context-path: /api/
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
