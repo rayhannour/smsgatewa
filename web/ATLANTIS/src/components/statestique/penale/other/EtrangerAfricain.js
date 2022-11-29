@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchDataEtrangersAfricain } from '../../../../api/statPenale/StatGeneral';
 
 import { DataTable } from 'primereact/datatable';
-
+import { TabView, TabPanel } from 'primereact/tabview';
 import { Column } from 'primereact/column';
 import { Chart } from 'primereact/chart';
 
@@ -10,8 +10,8 @@ import { Chart } from 'primereact/chart';
 
 export const EtrangerAfricain = React.memo(({ keycloaks }) => {
     const [basicData, setBasicData] = useState(null);
-    let jugerMale=0,jugerFemale=0,arreterMale=0,arreterFemale=0;
-    let jugerTotal=0,arreterTotal=0;
+    let jugerMale = 0, jugerFemale = 0, arreterMale = 0, arreterFemale = 0;
+    let jugerTotal = 0, arreterTotal = 0;
     const [statTerrorimeChartDTOS, setStatTerrorimeChartDTOS] = useState([]);
     const [statTerrorimePrisonDTOS, setStatTerrorimePrisonDTOS] = useState([]);
 
@@ -24,30 +24,30 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
             let chartTableaux = [];
             chartStats = response.data.statTerrorimeChartDTOS;
             chartTableaux = response.data.statTerrorimePrisonDTOS;
-            
 
-            jugerMale=0;
-            jugerFemale=0;
-            arreterMale=0;
-            arreterFemale=0;
+
+            jugerMale = 0;
+            jugerFemale = 0;
+            arreterMale = 0;
+            arreterFemale = 0;
             for (var i = 0; i < response.data.statTerrorimeChartDTOS.length; i++) {
 
-               
-                if(response.data.statTerrorimeChartDTOS[i].tetat==="J" && response.data.statTerrorimeChartDTOS[i].tcodsex==="0"){
-                   
-                    jugerFemale=response.data.statTerrorimeChartDTOS[i].counts;
-                }else if(response.data.statTerrorimeChartDTOS[i].tetat==="J" && response.data.statTerrorimeChartDTOS[i].tcodsex==="1"){
-                    jugerMale=response.data.statTerrorimeChartDTOS[i].counts;
-                }else if(response.data.statTerrorimeChartDTOS[i].tetat==="A" && response.data.statTerrorimeChartDTOS[i].tcodsex==="0"){
-                    arreterFemale=response.data.statTerrorimeChartDTOS[i].counts;
-                }else if(response.data.statTerrorimeChartDTOS[i].tetat==="A" && response.data.statTerrorimeChartDTOS[i].tcodsex==="1"){
-                    arreterMale=response.data.statTerrorimeChartDTOS[i].counts;
+
+                if (response.data.statTerrorimeChartDTOS[i].tetat === "J" && response.data.statTerrorimeChartDTOS[i].tcodsex === "0") {
+
+                    jugerFemale = response.data.statTerrorimeChartDTOS[i].counts;
+                } else if (response.data.statTerrorimeChartDTOS[i].tetat === "J" && response.data.statTerrorimeChartDTOS[i].tcodsex === "1") {
+                    jugerMale = response.data.statTerrorimeChartDTOS[i].counts;
+                } else if (response.data.statTerrorimeChartDTOS[i].tetat === "A" && response.data.statTerrorimeChartDTOS[i].tcodsex === "0") {
+                    arreterFemale = response.data.statTerrorimeChartDTOS[i].counts;
+                } else if (response.data.statTerrorimeChartDTOS[i].tetat === "A" && response.data.statTerrorimeChartDTOS[i].tcodsex === "1") {
+                    arreterMale = response.data.statTerrorimeChartDTOS[i].counts;
                 }
-               
-                
-            } 
-            jugerTotal=jugerFemale+jugerMale;
-            arreterTotal=arreterFemale+arreterMale;
+
+
+            }
+            jugerTotal = jugerFemale + jugerMale;
+            arreterTotal = arreterFemale + arreterMale;
 
             setTJuger(jugerTotal);
             setTArreter(arreterTotal);
@@ -57,16 +57,16 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
                     {
                         label: 'ذكور',
                         backgroundColor: '#42A5F5',
-                        data: [jugerMale,arreterMale ]
+                        data: [jugerMale, arreterMale]
                     },
                     {
                         label: 'إناث',
                         backgroundColor: '#FFA726',
-                        data: [jugerFemale,arreterFemale ]
+                        data: [jugerFemale, arreterFemale]
                     }
                 ]
             });
-            
+
 
             setStatTerrorimeChartDTOS(chartStats);
             setStatTerrorimePrisonDTOS(chartTableaux);
@@ -82,7 +82,7 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
 
 
 
-    
+
 
     let basicOptions = {
         maintainAspectRatio: false,
@@ -119,7 +119,7 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
             <div className="layout-dashboard">
                 <div className="grid">
 
-                    <div className="col-12 md:col-6">
+                    <div className="col-12 md:col-4">
                         <div className="card widget-overview-box widget-overview-box-1">
                             <span className="overview-title">
                                 {tArreter}
@@ -128,7 +128,7 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
                                 <div className="overview-detail flex justify-content-between">
                                     <div className="overview-badge flex justify-content-center align-items-center">
                                         <i className="pi pi-arrow-up"></i>
-                                        <span>Arreter</span>
+                                        <span>الموقوفين</span>
                                     </div>
                                     <div className="overview-text">
                                         {tArreter}
@@ -138,7 +138,7 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
 
                         </div>
                     </div>
-                    <div className="col-12 md:col-6">
+                    <div className="col-12 md:col-4">
                         <div className="card widget-overview-box widget-overview-box-2">
                             <span className="overview-title">
                                 {tJuger}
@@ -147,10 +147,30 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
                                 <div className="overview-detail flex justify-content-between">
                                     <div className="overview-badge flex justify-content-center align-items-center">
                                         <i className="pi pi-arrow-up"></i>
-                                        <span>Juger</span>
+                                        <span>المحكومين</span>
                                     </div>
                                     <div className="overview-text">
-                                    {tJuger}
+                                        {tJuger}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div className="col-12 md:col-4">
+                        <div className="card widget-overview-box widget-overview-box-2">
+                            <span className="overview-title">
+                                {tJuger + tArreter}
+                            </span>
+                            <div className="flex justify-content-between">
+                                <div className="overview-detail flex justify-content-between">
+                                    <div className="overview-badge flex justify-content-center align-items-center">
+                                        <i className="pi pi-arrow-up"></i>
+                                        <span>العدد الجملي</span>
+                                    </div>
+                                    <div className="overview-text">
+                                        {tJuger + tArreter}
                                     </div>
                                 </div>
                             </div>
@@ -164,20 +184,31 @@ export const EtrangerAfricain = React.memo(({ keycloaks }) => {
                 <div className="col-12 md:col-12">
 
                     <div className="card p-fluid">
-                        
+
                         <div className="formgrid grid">
                             <div className="field col">
                                 <div className="card widget-table">
-                                <Chart type="bar" data={basicData} options={basicOptions} />
+
+                                    <TabView className="tabview-header-icon">
+                                        <TabPanel header="Header I" leftIcon="pi pi-calendar">
+                                            <Chart type="bar" data={basicData} options={basicOptions} />
+                                        </TabPanel>
+                                        
+                                    </TabView>
+
+
+
+
+
                                 </div>
 
                             </div>
                             <div className="field col">
                                 <div className="card widget-table" dir='rtl'>
                                     <DataTable className="p-datatable-customers" value={statTerrorimePrisonDTOS} dataKey="prison" rowHover rows={10} paginator>
-                                        <Column field="prison" header="Prison" sortable style={{ textAlign: 'right', minWidth: '20rem' }}></Column>
-                                        <Column field="countArreter" header="Arreter" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
-                                        <Column field="countJuger" header="Juger" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
+                                        <Column field="prison" header="الوحدة السجنية" sortable style={{ textAlign: 'right', minWidth: '20rem' }}></Column>
+                                        <Column field="countArreter" header="الموقوفين" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
+                                        <Column field="countJuger" header="المحكومين" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
                                     </DataTable>
                                 </div>
 

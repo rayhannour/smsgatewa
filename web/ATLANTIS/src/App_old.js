@@ -60,7 +60,7 @@ import { NotFound } from './pages/NotFound';
 import { FormSmsPenale } from './components/smsGateway/FormSmsPenale';
 
 import AuthorizedFunction from './ahthentificate/AuthorizedFunction';
-
+import { useKeycloak } from '@react-keycloak/web';
 
 import { useHistory } from 'react-router-dom';
 import { Button } from 'primereact/button';
@@ -69,8 +69,8 @@ import { DataJobSmsDetail } from './components/smsGateway/jobSms/DataJobSmsDetai
 
 
 
-const App = (props) => {
-
+const App_old = (props) => {
+    
     const [animationClass, setAnimationClass] = useState("");
 
     const [loadHero, setLoadHero] = useState(false);
@@ -78,7 +78,7 @@ const App = (props) => {
 
     const [rightMenuActive, setRightMenuActive] = useState(false);
     const [configActive, setConfigActive] = useState(false);
-    const [menuMode, setMenuMode] = useState('horizontal');
+    const [menuMode, setMenuMode] = useState('sidebar');
     const [overlayMenuActive, setOverlayMenuActive] = useState(false);
     const [ripple, setRipple] = useState(true);
     const [sidebarStatic, setSidebarStatic] = useState(false);
@@ -268,12 +268,22 @@ const App = (props) => {
 
     const [menuGlobal, setMenuGlobal] = useState([]);
 
+    const { keycloak, initialized } = useKeycloak();
 
 
 
 
     const history = useHistory();
 
+    useEffect(async () => {
+        if (keycloak && !keycloak.authenticated) {
+
+        }
+    }, [])
+
+    useEffect(async () => {
+        await AuthorizedFunction(keycloak, menu, menuGlobal);
+    }, [keycloak.authenticated])
 
 
     useEffect(() => {
@@ -498,7 +508,7 @@ const App = (props) => {
         console.log("dismissed");
         setDisplayBasic(false);
         history.push("/")
-
+        keycloak.login();
 
     }
 
@@ -506,27 +516,38 @@ const App = (props) => {
         setAnimationClass("hero-animation");
     });
     useEffect(() => {
-        history.push("/dashboard")
-    }, []);
+
+        if (keycloak && keycloak.authenticated) {
+
+            history.push("/dashboard")
+        }
 
 
+    }, [keycloak.authenticated]);
+
+    if (!initialized) {
+        return <></>;
+    } else {
+        //history.push("/dashboard");
+        //<NotFound keycloaks={keycloak}/>
+        console.log("initialize");
+    }
 
 
 
 
     return (
         <>
+            {keycloak && !keycloak.authenticated && (<>
 
-            {displayBasic && (<>
-
-                <Dialog visible={displayBasic} style={{ width: '800px', height: '1200px' }} modal onHide={() => setDisplayBasic(false)}>
-                    <div style={{ minHeight: '50vh', textAlign: 'center' }}>
+                <Dialog  visible={displayBasic} style={{ width: '800px', height: '1200px' }} modal onHide={() => setDisplayBasic(false)}>
+                    <div  style={{ minHeight: '50vh',textAlign:'center' }}>
                         <div className="exception-panel" >
-                            <br />
-                            <br /> <br />
-                            <br /> <br />
+                            <br/>
+                            <br/> <br/>
+                            <br/> <br/>
 
-                            {loadHero ? <><HeroSection /> <br /> <br /><Button style={{ fontSize: '1.5rem' }} className="mr-2 mb-2" label="الولوج للتطبيقة" icon="pi pi-check" onClick={() => onclose()} /></> : <button className="logo p-link" onClick={(e) => { setLoadHero(true) }}>
+                            {loadHero ? <><HeroSection /> <br/> <br/><Button style={{fontSize: '1.5rem'}} className="mr-2 mb-2" label="الولوج للتطبيقة" icon="pi pi-check"   onClick={() => onclose()}/></> : <button className="logo p-link" onClick={(e) => { setLoadHero(true) }}>
                                 <img src={`assets/layout/images/logo-${props.colorScheme === 'light' ? 'dark' : 'light'}.png`} alt="logo" style={{ height: "400px" }} />
                             </button>}
 
@@ -536,86 +557,94 @@ const App = (props) => {
                 </Dialog>
             </>)}
 
-            {!displayBasic ? 
-
-            <div className={layoutClassName} onClick={onDocumentClick}>
+            {keycloak && keycloak.authenticated && (<>
 
 
-                <div className="layout-main">
+                <div className={layoutClassName} onClick={onDocumentClick}>
+
+
+                    <div className="layout-main">
 
 
 
-                    <AppMenu model={menuGlobal} onRootMenuItemClick={onRootMenuItemClick} onMenuItemClick={onMenuItemClick} onToggleMenu={onToggleMenu} onMenuClick={onMenuClick} menuMode={menuMode}
-                        colorScheme={props.colorScheme} menuActive={menuActive}
-                        sidebarActive={sidebarActive} sidebarStatic={sidebarStatic} pinActive={pinActive}
-                        onSidebarMouseLeave={onSidebarMouseLeave} onSidebarMouseOver={onSidebarMouseOver}
-                        activeInlineProfile={activeInlineProfile} onChangeActiveInlineMenu={onChangeActiveInlineMenu} resetActiveIndex={resetActiveIndex} />
+                        <AppTopbar keycloaks={keycloak} items={menuGlobal} menuMode={menuMode} colorScheme={props.colorScheme} menuActive={menuActive}
+                            topbarMenuActive={topbarMenuActive} activeInlineProfile={activeInlineProfile} onTopbarItemClick={onTopbarItemClick} onMenuButtonClick={onMenuButtonClick}
+                            onSidebarMouseOver={onSidebarMouseOver} onSidebarMouseLeave={onSidebarMouseLeave} onToggleMenu={onToggleMenu}
+                            onChangeActiveInlineMenu={onChangeActiveInlineMenu} onMenuClick={onMenuClick} onMenuItemClick={onMenuItemClick}
+                            onRootMenuItemClick={onRootMenuItemClick} resetActiveIndex={resetActiveIndex} />
 
-                    <AppBreadcrumb routes={routes} onMenuButtonClick={onMenuButtonClick} menuMode={menuMode}
-                        onRightMenuButtonClick={onRightMenuButtonClick} onInputClick={onInputClick}
-                        searchActive={searchActive} breadcrumbClick={breadcrumbClick} />
+                        <AppMenu keycloaks={keycloak} model={menuGlobal} onRootMenuItemClick={onRootMenuItemClick} onMenuItemClick={onMenuItemClick} onToggleMenu={onToggleMenu} onMenuClick={onMenuClick} menuMode={menuMode}
+                            colorScheme={props.colorScheme} menuActive={menuActive}
+                            sidebarActive={sidebarActive} sidebarStatic={sidebarStatic} pinActive={pinActive}
+                            onSidebarMouseLeave={onSidebarMouseLeave} onSidebarMouseOver={onSidebarMouseOver}
+                            activeInlineProfile={activeInlineProfile} onChangeActiveInlineMenu={onChangeActiveInlineMenu} resetActiveIndex={resetActiveIndex} />
 
-                    <div className="layout-main-content">
+                        <AppBreadcrumb routes={routes} onMenuButtonClick={onMenuButtonClick} menuMode={menuMode}
+                            onRightMenuButtonClick={onRightMenuButtonClick} onInputClick={onInputClick}
+                            searchActive={searchActive} breadcrumbClick={breadcrumbClick} />
 
-
-                        <Route path="/" exact component={Dashboard} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/Dashboard" exact component={Dashboard} />
-
-                        <ProtectedRoute roles={['RealmAdmin']} path="/documentation" component={Documentation} />
-                        <Route path="/formlayout" component={FormLayoutDemo} />
-
-                        <ProtectedRoute roles={['app-manager']} path="/smspenale" component={FormSmsPenale} />
-                        <ProtectedRoute roles={['app-manager']} path="/smsjobs" component={DataJobSmsDetail} />
+                        <div className="layout-main-content">
 
 
-                        <ProtectedRoute roles={['RealmAdmin']} path="/floatlabel" component={FloatLabelDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/input" component={InputDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/invalidstate" component={InvalidStateDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/button" component={ButtonDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/table" component={TableDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/list" component={ListDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/tree" component={TreeDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/panel" component={PanelDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/overlay" component={OverlayDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/menu" component={MenuDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/message" component={MessagesDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/media" component={MediaDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/file" component={FileDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/chart" component={ChartDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/misc" component={MiscDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/display" component={DisplayDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/elevation" component={ElevationDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/flexbox" component={FlexBoxDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/icons" component={IconsDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/widgets" component={Widgets} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/grid" component={GridDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/spacing" component={SpacingDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/typography" component={TypographyDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/text" component={TextDemo} />
-                        <Route path="/crud" component={CrudDemo} />
-                        <Route path="/calendar" component={CalendarDemo} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/help" render={() => <Help colorScheme={props.colorScheme} />} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/invoice" render={() => <Invoice colorScheme={props.colorScheme} />} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/empty" component={EmptyPage} />
-                        <ProtectedRoute roles={['RealmAdmin']} path="/timeline" component={TimelineDemo} />
+                            <Route path="/" exact component={Dashboard} />
+                            <Route path="/login" component={Login} />
+                            <Route path="/Dashboard" exact component={Dashboard} />
+
+                            <ProtectedRoute roles={['RealmAdmin']} path="/documentation" component={Documentation} />
+                            <Route path="/formlayout" component={FormLayoutDemo} />
+
+                            <ProtectedRoute roles={['app-manager']} path="/smspenale" component={FormSmsPenale} />
+                            <ProtectedRoute roles={['app-manager']} path="/smsjobs" component={DataJobSmsDetail} />
+                            
+
+                            <ProtectedRoute roles={['RealmAdmin']} path="/floatlabel" component={FloatLabelDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/input" component={InputDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/invalidstate" component={InvalidStateDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/button" component={ButtonDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/table" component={TableDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/list" component={ListDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/tree" component={TreeDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/panel" component={PanelDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/overlay" component={OverlayDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/menu" component={MenuDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/message" component={MessagesDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/media" component={MediaDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/file" component={FileDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/chart" component={ChartDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/misc" component={MiscDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/display" component={DisplayDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/elevation" component={ElevationDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/flexbox" component={FlexBoxDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/icons" component={IconsDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/widgets" component={Widgets} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/grid" component={GridDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/spacing" component={SpacingDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/typography" component={TypographyDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/text" component={TextDemo} />
+                            <Route path="/crud" component={CrudDemo} />
+                            <Route path="/calendar" component={CalendarDemo} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/help" render={() => <Help colorScheme={props.colorScheme} />} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/invoice" render={() => <Invoice colorScheme={props.colorScheme} />} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/empty" component={EmptyPage} />
+                            <ProtectedRoute roles={['RealmAdmin']} path="/timeline" component={TimelineDemo} />
+
+                        </div>
+
+                        <AppFooter colorScheme={props.colorScheme} />
 
                     </div>
 
-                    <AppFooter colorScheme={props.colorScheme} />
+                    <AppRightMenu rightMenuActive={rightMenuActive} onRightMenuClick={onRightMenuClick} onRightMenuActiveChange={onRightMenuActiveChange} />
+
+                    <AppConfig configActive={configActive} onConfigButtonClick={onConfigButtonClick} onConfigClick={onConfigClick} menuMode={menuMode} changeMenuMode={onMenuModeChange}
+                        colorScheme={props.colorScheme} changeColorScheme={props.onColorSchemeChange} theme={props.theme} changeTheme={props.onMenuThemeChange}
+                        componentTheme={props.componentTheme} changeComponentTheme={props.onComponentThemeChange}
+                        ripple={ripple} onRippleChange={onRippleChange} />
 
                 </div>
-
-                <AppRightMenu rightMenuActive={rightMenuActive} onRightMenuClick={onRightMenuClick} onRightMenuActiveChange={onRightMenuActiveChange} />
-
-
-
-            </div>
-            :null}
-        </>
-
+            </>)}</>
     );
 
 }
 
-export default App;
+export default App_old;

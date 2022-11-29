@@ -128,7 +128,7 @@ export const TransactionHistoryPenale = ({ keycloaks }) => {
 
             <div className="card widget-timeline">
                 <div className="timeline-header flex justify-content-between align-items-center">
-                    <p>Transaction history</p>
+                    <p>توزيع المودعين حسب طاقة الإستعاب</p>
                     <div className="header-icons">
                         <i className="pi pi-refresh"></i>
                         <i className="pi pi-filter"></i>

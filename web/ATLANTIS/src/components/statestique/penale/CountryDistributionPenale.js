@@ -104,7 +104,7 @@ export const CountryDistributionPenale = ({keycloaks}) => {
         <>
         <div className="col-12 md:col-4">
             <div className="card widget-country-graph">
-                <div className="country-title">Affaires distrubutions</div>
+                <div className="country-title">نسب المودعين حسب القضايا</div>
                 <div className="country-graph flex justify-content-center">
                     <Chart type="doughnut" id="country-chart" data={countryChart} options={countryChartOptions} style={{ position: 'relative', width: '75%' }}></Chart>
                 </div>

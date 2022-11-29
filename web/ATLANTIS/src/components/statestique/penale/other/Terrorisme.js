@@ -119,7 +119,7 @@ export const Terrorisme = React.memo(({ keycloaks }) => {
             <div className="layout-dashboard">
                 <div className="grid">
 
-                    <div className="col-12 md:col-6">
+                    <div className="col-12 md:col-4">
                         <div className="card widget-overview-box widget-overview-box-1">
                             <span className="overview-title">
                                 {tArreter}
@@ -128,7 +128,7 @@ export const Terrorisme = React.memo(({ keycloaks }) => {
                                 <div className="overview-detail flex justify-content-between">
                                     <div className="overview-badge flex justify-content-center align-items-center">
                                         <i className="pi pi-arrow-up"></i>
-                                        <span>Arreter</span>
+                                        <span>الموقوفين</span>
                                     </div>
                                     <div className="overview-text">
                                         {tArreter}
@@ -138,7 +138,7 @@ export const Terrorisme = React.memo(({ keycloaks }) => {
 
                         </div>
                     </div>
-                    <div className="col-12 md:col-6">
+                    <div className="col-12 md:col-4">
                         <div className="card widget-overview-box widget-overview-box-2">
                             <span className="overview-title">
                                 {tJuger}
@@ -147,7 +147,7 @@ export const Terrorisme = React.memo(({ keycloaks }) => {
                                 <div className="overview-detail flex justify-content-between">
                                     <div className="overview-badge flex justify-content-center align-items-center">
                                         <i className="pi pi-arrow-up"></i>
-                                        <span>Juger</span>
+                                        <span>المحكومين</span>
                                     </div>
                                     <div className="overview-text">
                                     {tJuger}
@@ -157,6 +157,25 @@ export const Terrorisme = React.memo(({ keycloaks }) => {
 
                         </div>
                     </div>
+                    <div className="col-12 md:col-4">
+                        <div className="card widget-overview-box widget-overview-box-2">
+                            <span className="overview-title">
+                                {tJuger+tArreter}
+                            </span>
+                            <div className="flex justify-content-between">
+                                <div className="overview-detail flex justify-content-between">
+                                    <div className="overview-badge flex justify-content-center align-items-center">
+                                        <i className="pi pi-arrow-up"></i>
+                                        <span>العدد الجملي</span>
+                                    </div>
+                                    <div className="overview-text">
+                                    {tJuger+tArreter}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>                    
                 </div>
             </div>
 
@@ -175,9 +194,9 @@ export const Terrorisme = React.memo(({ keycloaks }) => {
                             <div className="field col">
                                 <div className="card widget-table" dir='rtl'>
                                     <DataTable className="p-datatable-customers" value={statTerrorimePrisonDTOS} dataKey="prison" rowHover rows={10} paginator>
-                                        <Column field="prison" header="Prison" sortable style={{ textAlign: 'right', minWidth: '20rem' }}></Column>
-                                        <Column field="countArreter" header="Arreter" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
-                                        <Column field="countJuger" header="Juger" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
+                                        <Column field="prison" header="الوحدة السجنية" sortable style={{ textAlign: 'right', minWidth: '20rem' }}></Column>
+                                        <Column field="countArreter" header="الموقوفين" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
+                                        <Column field="countJuger" header="المحكومين" style={{ textAlign: 'right', minWidth: '10rem' }}></Column>
                                     </DataTable>
                                 </div>
 

@@ -49,7 +49,7 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
                 labels: Object.values(newRowsMounth),
                 datasets: [
                     {
-                        label: 'Entrants',
+                        label: 'الداخلون',
                         backgroundColor: '#FC6161',
                         data:Object.values(newRowsCountMounth)
                     }
@@ -76,7 +76,7 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
                 labels: Object.values(newRowsMounth),
                 datasets: [
                     {
-                        label: 'Sortants',
+                        label: 'المغادرون',
                         backgroundColor: '#42A5F5',
                         data:Object.values(newRowsCountMounth)
                     }
@@ -157,7 +157,7 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
                 labels: Object.values(newRowsPrison),
                 datasets: [
                     {
-                        label: 'Les Entrants',
+                        label: 'الداخلون',
                         data: Object.values(newRowsCountVal),
                         borderColor: [
                             '#FC6161',
@@ -170,7 +170,7 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
                         stepped: true
                     },
                     {
-                        label: 'Les Sortants',
+                        label: 'المغادرون',
                         data: Object.values(newRowsCountMaxVal),
                         backgroundColor: getComputedStyle(document.body).getPropertyValue('--primary-color'),
                         fill: true,
@@ -220,7 +220,7 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
             <div className="col-12 md:col-8">
                 <div className="card widget-visitor-graph">
                     <div className="card-header">
-                        <span>La mouvements des detenues depuis 1996</span>
+                        <span>عدد المودعين الداخلون / المغادرون سنويا</span>
 
                     </div>
 
@@ -228,7 +228,7 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
                         <h6>Valeur</h6>
                         {showStat ?
                             <Chart ref={visitor} type="bar" data={visitorChart} options={visitorChartOptions} id='chart' ></Chart> : <span>loading chart</span>}
-                        <h5>Annee: [{value5[0]+1996}, {value5[1]+1996}]</h5>
+                        <h5>السنة: [{value5[0]+1996}, {value5[1]+1996}]</h5>
                         <Slider min={0} max={30} value={value5} onChange={(e) => setValue5(e.value) } range />
                     </div>
                 </div>
@@ -238,16 +238,16 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
             <div className="col-12 md:col-4">
                 <div className="card widget-visitor-graph">
                     <div className="card-header">
-                        <span>La mouvements des detenues depuis 1996</span>
+                        <span>عدد المودعين الداخلون / المغادرون سنويا</span>
                     </div>
 
                     <div className="graph">
 
                         <DataTable value={data} selectionMode="single" selection={selectedRow} onSelectionChange={e => setSelectedRow(e.value)} dataKey="years" responsiveLayout="scroll"
                             onRowSelect={onRowSelect} onRowUnselect={onRowUnselect}>
-                            <Column field="years" header="Année"></Column>
-                            <Column field="entrantCount" header="Entrants"></Column>
-                            <Column field="sortatntCount" header="Sortants"></Column>
+                            <Column field="years" header="السنة"></Column>
+                            <Column field="entrantCount" header="الداخلون"></Column>
+                            <Column field="sortatntCount" header="المغادرون"></Column>
 
                         </DataTable>
                     </div>
@@ -255,9 +255,9 @@ export const VisitorEntrantSortantPenale = React.memo(({ keycloaks }) => {
             </div>
 
 
-                        <Dialog header="Dialog" visible={displayBasic} style={{ width: '35vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)}>
+                        <Dialog header="مقارنة" visible={displayBasic} style={{ width: '35vw' }} modal footer={basicDialogFooter} onHide={() => setDisplayBasic(false)}>
                             <p>
-                               Distributions des detenues pendant {years}
+                               عدد المودعين (الداخلون / المغادرون) {years}
                             </p>
                             <Chart type="bar" data={entrantYears} />
                             <Chart type="bar" data={sortantYears} />

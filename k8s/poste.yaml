@@ -1,0 +1,37 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: poste-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: poste-services
+  template:
+    metadata:
+      labels:
+        app: poste-services
+    spec:
+      containers:
+      - name: poste-services
+        image: 090380/poste-sapp-v1:1.01
+        ports:
+        - containerPort: 8086
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poste-services
+  labels:
+    app: poste-services
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8086
+    targetPort: 8086
+    protocol: TCP
+    nodePort: 31201
+  selector:
+    app: poste-services

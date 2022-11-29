@@ -41,22 +41,13 @@ const AppBreadcrumb = (props) => {
                     <i className="pi pi-bars"></i>
                 </button>}
 
-                <BreadCrumb model={items} className="layout-breadcrumb" />
+                ++
             </div>
             <div className="layout-breadcrumb-right-items">
-                <button tabIndex="0" className="search-icon p-link" onClick={props.breadcrumbClick}>
-                    <i className="pi pi-search"></i>
-                </button>
 
-                <div className={classNames('search-wrapper', { 'active-search-wrapper': props.searchActive })} >
-                    <span className="p-input-icon-left">
-                        <i className="pi pi-search"></i>
-                        <InputText placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} onClick={props.onInputClick} />
-                    </span>
-                </div>
 
                 <span className="layout-rightmenu-button-desktop">
-                    <Button label="Today" icon="pi pi-bookmark" className="layout-rightmenu-button" onClick={props.onRightMenuButtonClick}></Button>
+                    <Button label="منظومات أخرى" icon="pi pi-bookmark" className="layout-rightmenu-button" onClick={props.onRightMenuButtonClick}></Button>
                 </span>
 
                 <span className="layout-rightmenu-button-mobile">

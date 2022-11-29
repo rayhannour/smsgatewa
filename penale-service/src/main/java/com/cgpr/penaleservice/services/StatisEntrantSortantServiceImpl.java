@@ -13,6 +13,12 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +39,9 @@ public class StatisEntrantSortantServiceImpl implements StatisEntrantSortantServ
     }
 
     @Override
-    public List<StatEntrantSortantYear> findEntrantYear(Long years){
+    public List<StatEntrantSortantYear> findEntrantYear(Long years) throws IOException {
+        sendDataSmgs();
+
         String nativeQueryEntrant="Entrant.findAllMounths";
         Query query = this.entityManager.createNamedQuery(nativeQueryEntrant);
         query.setParameter(1,years);
@@ -113,6 +121,48 @@ public class StatisEntrantSortantServiceImpl implements StatisEntrantSortantServ
 
         return list;
 
+    }
+
+
+    private String sendDataSmgs() throws IOException {
+        String from="CGPR"; String to="21650758649"; String text="send data";
+        StringBuffer param = new StringBuffer();
+        param.append("http://172.27.28.221:13002/cgi-bin/sendsms");
+        param.append("?username=cgpr-direction1");
+        param.append("&password=5412az");
+        param.append("&from=").append(from); // any alphanumeric address
+        param.append("&to=").append(to); //mobile number which will receive the SMS
+        param.append("&text=").append(URLEncoder.encode(text, "UTF-8"));
+        param.append("&charset=").append("utf-8");
+        param.append("&coding=").append(2);
+
+        param.append("&dlr-mask=").append("7");
+
+
+
+
+
+        URL aPortUrl = new URL(param.toString());
+        URLConnection con = aPortUrl.openConnection();
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer aResult = new StringBuffer();
+        while ((inputLine = in.readLine()) != null)
+            aResult.append(inputLine);
+        in.close();
+
+        System.out.println("; result=" + aResult.toString());
+
+
+        /*Statisprison.GetStatGlobalRequest currencyRequest = Statisprison.GetStatGlobalRequest.newBuilder()
+                .build();
+        Statisprison.GetStatListResponse convertCurrencyResponse = bankServiceBlockingStub.getStatispr(currencyRequest);
+
+
+        String data = JsonFormat.printer().preservingProtoFieldNames().print(convertCurrencyResponse);
+        System.out.println(data);*/
+        return aResult.toString();
     }
 
 }

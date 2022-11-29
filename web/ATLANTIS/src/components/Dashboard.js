@@ -62,9 +62,7 @@ export const Dashboard = () => {
                     
                     
                     
-                    
-                    
-                    
+                            
                     <BlocArragePenale keycloaks={keycloak} />
                     <VisitorPenale keycloaks={keycloak} />
 

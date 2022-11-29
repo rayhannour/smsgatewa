@@ -97,23 +97,7 @@ const AppRightPanel = (props) => {
 						</div>
 					</div>
 
-					<div className="user-tasks">
-						<div className="col-12 md:col-12">
-							<div className="card widget-overview-box ">
-								<span className="overview-title">
-									منظومة التصرف في الأعوان
-									<br />
-								</span>
-								<div >
-									<div style={{ align: "center" }}>
-										<Button style={{ width: "100px", height: "100px" }} icon="pi pi-users" className="p-button-rounded p-button-warning" aria-label="Notification" />
-									</div>
-								</div>
-								<br />
-								<br />
-							</div>
-						</div>
-					</div>
+
 
 
 				</div>

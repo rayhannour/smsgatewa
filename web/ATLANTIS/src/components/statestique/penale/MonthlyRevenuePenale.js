@@ -123,7 +123,7 @@ export const MonthlyRevenuePenale = ({ keycloaks }) => {
             <div className="col-12 md:col-8">
                 <div className="card widget-revenue-graph">
                 <div className="card-header">
-                            <span>Monthly revenue</span>
+                            <span>حسب الفئة العمرية</span>
                            
                         </div>
                     {isLoading

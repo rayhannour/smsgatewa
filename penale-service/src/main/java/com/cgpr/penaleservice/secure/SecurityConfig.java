@@ -32,20 +32,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2ResourceServer().jwt().jwtAuthenticationConverter(this.jwtAuthenticationConverter());*/
 
         // Validate tokens through configured OpenID Provider
-        http.cors().and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
+        //http.cors().and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(jwtAuthenticationConverter());
         /*http.cors().and().authorizeRequests()
                 .mvcMatchers("/stat/*").hasRole("app-manager")
 
         .anyRequest().permitAll();*/
 
 
-        http.cors()
+        /*http.cors()
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                //.mvcMatchers("/event/**").permitAll()
-                .mvcMatchers("/stat/*").hasRole("app-manager")
-                .anyRequest().permitAll();
+                .mvcMatchers("/stat/*").permitAll()
+                //.mvcMatchers("/stat/*").hasRole("app-manager")
+                .anyRequest().permitAll();*/
 
         //;
         // Allow showing pages within a frame

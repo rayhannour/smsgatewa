@@ -58,15 +58,15 @@ export const BlocArragePenale = ({ keycloaks }) => {
 
     const renderElement = (tetat) => {
         if (tetat == 'J')
-            return "JUGER";
+            return "المحكومين";
         else if (tetat == 'A')
-            return "ARRETER";
+            return "الموقوفين";
         else if (tetat == 'E')
-            return "EVADER";
+            return "بحالة فرار";
         else if (tetat == 'م')
-            return "PRIMAIRE";
+            return "المبتدؤون";
         else if (tetat == 'ع')
-            return "RECIE";
+            return "العائدون";
         else return null;
     }
 

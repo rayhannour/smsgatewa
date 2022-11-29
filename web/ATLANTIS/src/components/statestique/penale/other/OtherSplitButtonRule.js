@@ -48,18 +48,18 @@ export const OtherSplitButtonRule = ({ keycloaks }) => {
             <div className="p-grid">
                 <div className="col-12 md:col-12">
                     <div className="card">
-                        <Button label="Terrorisme" className="p-button-outlined p-button-warning p-mr-2 p-mb-2" onClick={() => onClick('displayTerrorisme', 'top')} />
-                       <span>{space}</span> <Button label="Etranger" className="p-button-outlined p-button-help p-mr-2 p-mb-2" onClick={() => onClick('displayEtranger', 'top')} />
-                       <span>{space}</span><Button label="Etranger Africain" className="p-button-outlined p-button-danger p-mr-2 p-mb-2" onClick={() => onClick('displayEtrangerAfricain', 'top')}/>
-                        <Dialog header="Terrorime" visible={displayTerrorisme} position={position} modal style={{ width: '65vw' }} onHide={() => onHide('displayTerrorisme')}
+                        <Button label="الإرهاب" className="p-button-outlined p-button-warning p-mr-2 p-mb-2" onClick={() => onClick('displayTerrorisme', 'top')} />
+                       <span>{space}</span> <Button label="الأجانب" className="p-button-outlined p-button-help p-mr-2 p-mb-2" onClick={() => onClick('displayEtranger', 'top')} />
+                       <span>{space}</span><Button label="أفارقة أجانب" className="p-button-outlined p-button-danger p-mr-2 p-mb-2" onClick={() => onClick('displayEtrangerAfricain', 'top')}/>
+                        <Dialog header="الإرهاب" visible={displayTerrorisme} position={position} modal style={{ width: '85vw' }} onHide={() => onHide('displayTerrorisme')}
                             draggable={false} resizable={false}>
                             <Terrorisme keycloaks={keycloaks} />
                         </Dialog>
-                        <Dialog header="Etranger" visible={displayEtranger} position={position} modal style={{ width: '65vw' }} onHide={() => onHide('displayEtranger')}
+                        <Dialog header="الأجانب" visible={displayEtranger} position={position} modal style={{ width: '85vw' }} onHide={() => onHide('displayEtranger')}
                             draggable={false} resizable={false}>
                             <Etranger keycloaks={keycloaks} />
                         </Dialog>
-                        <Dialog header="Etranger Africain" visible={displayEtrangerAfricain} position={position} modal style={{ width: '65vw' }} onHide={() => onHide('displayEtrangerAfricain')}
+                        <Dialog header="أفارقة أجانب" visible={displayEtrangerAfricain} position={position} modal style={{ width: '85vw' }} onHide={() => onHide('displayEtrangerAfricain')}
                             draggable={false} resizable={false}>
                             <EtrangerAfricain keycloaks={keycloaks} />
                         </Dialog>                        

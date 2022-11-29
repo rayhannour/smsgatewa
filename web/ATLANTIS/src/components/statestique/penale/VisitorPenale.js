@@ -42,7 +42,7 @@ export const VisitorPenale = React.memo(({keycloaks}) => {
                 labels: Object.values(prison),
                 datasets: [
                     {
-                        label: 'Plan',
+                        label: 'المودعين',
                         data: Object.values(val),
                         borderColor: [
                             '#FC6161',
@@ -55,7 +55,7 @@ export const VisitorPenale = React.memo(({keycloaks}) => {
                         stepped: true
                     },
                     {
-                        label: 'Growth actual',
+                        label: 'طاقة الإستعاب',
                         data: Object.values(maxval),
                         backgroundColor: getComputedStyle(document.body).getPropertyValue('--primary-color'),
                         fill: true,
@@ -107,25 +107,25 @@ export const VisitorPenale = React.memo(({keycloaks}) => {
                 <div className="col-12 md:col-8">
                     <div className="card widget-visitor-graph">
                         <div className="card-header">
-                            <span>La distribution des detenues dans les prisons</span>
+                            <span>توزيع المساجين حسب الوحدات السجنية</span>
                             
                         </div>
 
                         <div className="graph-content grid">
                             <div className="col-12 md:col-6">
                                 <h2>{total}</h2>
-                                <h6>TOTAL DETENU</h6>
-                                <p>Measure how fast you’re growing mothly recurring revenue. <button className="p-link">Learn more</button></p>
+                                <h6>العدد الجملي للمودعين</h6>
+                               
                             </div>
                             <div className="col-12 md:col-6">
                                 <h2>{totalMax}</h2>
-                                <h6>Max.Detenu/Resident</h6>
-                                <p>The revenue generated per account on a monthly or yearly basis. <button className="p-link">Learn more</button></p>
+                                <h6>طاقة الإستعاب الجملية</h6>
+                                
                             </div>
                         </div>
 
                         <div className="graph">
-                            <h6>Revenue</h6>
+                            <h6>العدد</h6>
                             {showStat ?
                         <Chart ref={visitor} type="bar" data={visitorChart} options={visitorChartOptions} id="visitor-chart"></Chart> : <span>loading chart</span>}
                             
