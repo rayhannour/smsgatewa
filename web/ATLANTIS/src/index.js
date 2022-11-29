@@ -8,7 +8,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 //import * as serviceWorker from './serviceWorker';
 const cache = new InMemoryCache();
 const client = new ApolloClient({
-    uri: 'http://192.168.100.76:31002/SMGS-SERVICE/api/graphql',
+    uri: 'http://192.168.100.218:8888/SMGS-SERVICE/api/graphql',
 	cache: cache,
 });
 ReactDOM.render(
