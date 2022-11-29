@@ -116,7 +116,7 @@ export const DataJobSmsDetail = () => {
         initFilters1();
 
         if (!listening) {
-            eventSource = new EventSource("http://192.168.100.218:8888/SMGS-SERVICE/api/event/subscribe", {
+            eventSource = new EventSource("http://192.168.100.76:31002/SMGS-SERVICE/api/event/subscribe", {
 
             });
 
